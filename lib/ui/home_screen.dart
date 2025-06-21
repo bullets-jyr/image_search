@@ -1,20 +1,21 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:image_search/data/api.dart';
+import 'package:image_search/data/pixabay_api_provider.dart';
 import 'package:image_search/model/photo.dart';
-import 'package:http/http.dart' as http;
 import 'package:image_search/ui/widget/photo_widget.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  // final PixabayApi api;
+
+  const HomeScreen({
+    super.key,
+    // required this.api
+  });
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final api = PixabayApi();
   final _controller = TextEditingController();
 
   List<Photo> _photos = [];
@@ -27,6 +28,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final pixabayApiProvider = PixabayApiProvider.of(context);
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -46,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 suffixIcon: IconButton(
                   onPressed: () async {
-                    final photos = await api.fetch(_controller.text);
+                    final photos = await pixabayApiProvider.api.fetch(_controller.text);
                     setState(() {
                       _photos = photos;
                     });
