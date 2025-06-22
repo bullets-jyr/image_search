@@ -9,18 +9,18 @@ void main() {
     final homeViewModel = HomeViewModel(FakePhotoApiRepository());
 
     await homeViewModel.fetch('apple');
-    await homeViewModel.fetch('iPhone');
 
     final result = fakeJson.map((e) => Photo.fromJson(e)).toList();
 
     expect(
-      homeViewModel.photoStream,
-      emitsInOrder([
-        // isA<List<Photo>>(),
-        equals([]),
-        equals(result),
-        equals(result),
-      ]),
+      homeViewModel.photos,
+      result
+      // emitsInOrder([
+      //   // isA<List<Photo>>(),
+      //   equals([]),
+      //   equals(result),
+      //   equals(result),
+      // ]),
     );
   });
 }

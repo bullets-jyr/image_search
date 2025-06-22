@@ -33,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // final pixabayApiProvider = PixabayProvider.of(context);
     // final homeViewModel = PixabayProvider.of(context).homeViewModel;
     // final homeViewModel = Provider.of<HomeViewModel>(context);
-    final homeViewModel = context.watch<HomeViewModel>();
+    // final homeViewModel = context.watch<HomeViewModel>();
 
     return Scaffold(
       appBar: AppBar(
@@ -58,37 +58,33 @@ class _HomeScreenState extends State<HomeScreen> {
                     // setState(() {
                     //   _photos = photos;
                     // });
-                    homeViewModel.fetch(_controller.text);
+                    // homeViewModel.fetch(_controller.text);
+                    context.read<HomeViewModel>().fetch(_controller.text);
                   },
                   icon: const Icon(Icons.search),
                 ),
               ),
             ),
           ),
-          StreamBuilder<List<Photo>>(
-            stream: homeViewModel.photoStream,
-            builder: (context, asyncSnapshot) {
-              if (!asyncSnapshot.hasData) {
-                return CircularProgressIndicator();
-              }
-              final photos = asyncSnapshot.data!;
+          Consumer<HomeViewModel>(
+            builder: (_, homeViewModel, child) {
               return Expanded(
                 child: GridView.builder(
                   // shrinkWrap: true,
                   padding: const EdgeInsets.all(16.0),
-                  itemCount: photos.length,
+                  itemCount: homeViewModel.photos.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     crossAxisSpacing: 16,
                     mainAxisSpacing: 16,
                   ),
                   itemBuilder: (context, index) {
-                    final photo = photos[index];
+                    final photo = homeViewModel.photos[index];
                     return PhotoWidget(photo: photo);
                   },
                 ),
               );
-            }
+            },
           ),
         ],
       ),
