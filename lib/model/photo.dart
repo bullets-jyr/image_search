@@ -4,16 +4,42 @@ part 'photo.freezed.dart';
 
 part 'photo.g.dart';
 
+// 새로운 방식
+// // ignore_for_file: annotate_overrides
 @freezed
+@JsonSerializable()
 class Photo with _$Photo {
-  const factory Photo({
-    required int id,
-    required String tags,
-    @JsonKey(name: 'previewURL') required String previewUrl,
-  }) = _Photo;
+  @override
+  final int? id;
+  @override
+  final String tags;
+  @JsonKey(name: 'previewURL')
+  @override
+  final String previewUrl;
+
+  const Photo({
+    this.id = 1,
+    required this.tags,
+    required this.previewUrl,
+  });
 
   factory Photo.fromJson(Map<String, dynamic> json) => _$PhotoFromJson(json);
+
+  Map<String, dynamic> toJson() => _$PhotoToJson(this);
 }
+
+// @freezed
+// class Photo with _$Photo {
+// 기존 코드를 살리는 방법
+// abstract class Photo with _$Photo {
+//   const factory Photo({
+//     required int id,
+//     required String tags,
+//     @JsonKey(name: 'previewURL') required String previewUrl,
+//   }) = _Photo;
+//
+//   factory Photo.fromJson(Map<String, dynamic> json) => _$PhotoFromJson(json);
+// }
 
 // @JsonSerializable()
 // class Photo extends Equatable {
