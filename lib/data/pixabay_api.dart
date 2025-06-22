@@ -6,7 +6,7 @@ import 'package:image_search/model/photo.dart';
 class PixabayApi {
   // static final
   final baseUrl = 'https://pixabay.com/api/';
-  final key = '';
+  final key = '50974536-699d7d66adbcf696ebeaba640';
 
   Future<List<Photo>> fetch(String query) async {
     final response = await http.get(
