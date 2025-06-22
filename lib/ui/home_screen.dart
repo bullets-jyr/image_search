@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:image_search/data/pixabay_api_provider.dart';
+import 'package:image_search/data/pixabayProvider.dart';
 import 'package:image_search/model/photo.dart';
 import 'package:image_search/ui/widget/photo_widget.dart';
 
@@ -28,7 +28,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final pixabayApiProvider = PixabayApiProvider.of(context);
+    // final pixabayApiProvider = PixabayProvider.of(context);
+    final homeViewModel = PixabayProvider.of(context).homeViewModel;
 
     return Scaffold(
       appBar: AppBar(
@@ -53,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     // setState(() {
                     //   _photos = photos;
                     // });
-                    pixabayApiProvider.fetch(_controller.text);
+                    homeViewModel.fetch(_controller.text);
                   },
                   icon: const Icon(Icons.search),
                 ),
@@ -61,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           StreamBuilder<List<Photo>>(
-            stream: pixabayApiProvider.photoStream,
+            stream: homeViewModel.photoStream,
             builder: (context, asyncSnapshot) {
               if (!asyncSnapshot.hasData) {
                 return CircularProgressIndicator();
