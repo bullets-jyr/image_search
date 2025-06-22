@@ -7,7 +7,7 @@ import 'package:image_search/model/photo.dart';
 class PixabayApi implements PhotoApiRepository{
   // static final
   static const baseUrl = 'https://pixabay.com/api/';
-  static const key = '';
+  static const key = '50974536-699d7d66adbcf696ebeaba640';
 
   @override
   Future<List<Photo>> fetch(String query, {http.Client? client}) async {
